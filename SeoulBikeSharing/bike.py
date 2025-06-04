@@ -57,16 +57,15 @@ X_test = preprocessor.transform(X_test)
 print(X_train.shape)
 
 #Build the DNN
-model = Sequential([
-    Input(shape=(X_train.shape[1],)),  # dynamic input shape
-    Dense(50, activation='relu'),
-    Dense(50, activation='relu'),
-    Dense(50, activation='relu'),
-    Dropout(0.3),
-    Dense(50, activation='relu'),
-    Dense(50, activation='relu'),
-    Dense(1, activation='sigmoid')  # Sigmoid activation function because label is binary
-])
+inputLayer = Input(shape=(X_train.shape[1],))
+hiddenLayer1 = Dense(50, activation='relu')(inputLayer)
+hiddenLayer2 = Dense(50, activation='relu')(hiddenLayer1)
+hiddenLayer3 = Dense(50, activation='relu')(hiddenLayer2)
+droupout1 = Dropout(0.3) (hiddenLayer3)
+hiddenLayer4 = Dense(50, activation='relu')(droupout1)
+hiddenLayer5 = Dense(50, activation='relu')(hiddenLayer4)
+outputLayer = Dense(1, activation='sigmoid') (hiddenLayer5)
+model = Model(inputs=inputLayer, outputs=outputLayer) 
 
 model.summary()
 model.compile(optimizer='adam',
